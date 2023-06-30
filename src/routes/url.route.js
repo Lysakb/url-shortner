@@ -12,10 +12,10 @@ const urlRouter = express.Router();
 
 urlRouter.post('/user/create', userSignup);
 urlRouter.post('/user/login', userLogin);
-urlRouter.post("/url/shorten", authenticateUser, createShortenUrl);
+urlRouter.post("/url/shorten", createShortenUrl);
 urlRouter.get("/:shortUrl", getUrl);
-urlRouter.get('/user/history', authenticateUser, userHistory);
-urlRouter.get("/user/link", authenticateUser, getLinks);
-urlRouter.get("/qr/scan", authenticateUser, scanQr);
+urlRouter.get('/user/history', userHistory);
+urlRouter.get("/user/link", getLinks);
+urlRouter.get("/qr/scan", scanQr);
 
 module.exports = urlRouter;
