@@ -9,7 +9,12 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 
 const app = express();
-// const router = express.Router();
+
+const swaggerUi = require("swagger-ui-express");
+const swaggerDefinition = require("../utils/swaggerDocument");
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerDocument = swaggerJSDoc(swaggerDefinition);
+
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -23,8 +28,12 @@ app.use(limiter);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors({
+  origin: 'https://localhost:3000',
+  credentials: true,
+}));
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', urlRouter);
 //default route
 app.get('/', (req, res) => {
