@@ -48,7 +48,7 @@
  *       409:
  *         description: User already exists
  */
-module.exports = { signupDoc };
+exports.userSignup ={};
 
 /**
  * @swagger
@@ -83,13 +83,15 @@ module.exports = { signupDoc };
  *       404:
  *         description: User does not exist.
  */
-module.exports = { loginDoc };
+exports.userLogin ={};
 
 /**
  * @swagger
  * /url/shorten:
  *   post:
  *     summary: Create a short url
+ *     tags:
+ *       - URL Shortening
  *     parameters:
  *       - in: Bearer token
  *         name: Authorization
@@ -97,10 +99,10 @@ module.exports = { loginDoc };
  *         type: string
  *         description: Bearer token to authenticate user
  *       - in: body
- *         name: Long url
+ *         name: Original url
  *         required: true
  *         type: string
- *         description: Long url to be shorten
+ *         description: Original url to be shorten
  *       - in: body
  *         name: custom name
  *         required: false
@@ -110,63 +112,110 @@ module.exports = { loginDoc };
  *       200:
  *         description: Short url created
  *       401:
- *         description: Missing or Invalid Authorization header
+ *         description: Invalid Token
  *       404:
- *         description: Long url is invalid
+ *         description: Original url is invalid
  */
-module.exports = {createUrl}
+exports.createShortenUrl = {}
+
+/**
+ * @swagger
+ * /:shortUrl:
+ *   get:
+ *     summary: Redirect the short url to the original url
+ *     tags:
+ *       - URL Shortening
+ *     parameters:
+ *       - in: Path
+ *         name: shortUrl
+ *         required: true
+ *         type: string
+ *         description: The url to be found
+ *       - in: Bearer token
+ *         name: Authorization
+ *         required: true
+ *         type: string
+ *         description: Bearer token to authenticate user
+ *     responses:
+ *       200:
+ *         description: Content of the original url
+ *       401:
+ *         description: Invalid Token
+ *       404:
+ *         description: Url not found
+ */
+exports.getUrl = {};
 
 /**
  * @swagger
  * /user/history:
  *   get:
- *     summary: Get states based on the provided state name
- *     security:
- *       - ApiKeyAuth: []
+ *     summary: Get History of users
  *     tags:
- *       - States
+ *       - URL Shortening
  *     parameters:
- *       - in: query
- *         name: state_name
- *         required: false
+ *       - in: Bearer token
+ *         name: Authorization
+ *         required: true
  *         type: string
- *         description: Name of the state
- *       - in: query
- *         name: lga
- *         required: false
- *         type: string
- *         description: Local Government Area
+ *         description: Bearer token to authenticate user
  *     responses:
  *       200:
- *         description: A list of states
+ *         description: History of the user
  *       401:
- *         description: Missing or Invalid Authorization header
+ *         description: Invalid Token
  *       404:
- *         description: State not found
+ *         description: User not found
  */
-exports.stateDoc = {};
+exports.userHistory = {};
 
 /**
  * @swagger
- * /location/lga:
+ * /user/link:
  *   get:
- *     summary: Get local governments based on the provided LGA name
- *     security:
- *       - ApiKeyAuth: []
+ *     summary: Get all short url link created by the user
  *     tags:
- *       - Local Government
+ *       - URL Shortening
  *     parameters:
- *       - in: query
- *         name: lga_name
- *         required: false
+ *       - in: Bearer token
+ *         name: Authorization
+ *         required: true
  *         type: string
- *         description: Name of the Local Government Area
+ *         description: Bearer token to authenticate user
  *     responses:
  *       200:
- *         description: A list of local governments
+ *         description: All shorturl links created by the user
  *       401:
- *         description: Missing or Invalid Authorization header
+ *         description: Invalid Token
  *       404:
- *         description: Local Government not found
+ *         description: User not found
  */
-exports.lgaDoc = {};
+exports.getLinks = {};
+
+/**
+ * @swagger
+ * /qr/scan:
+ *   get:
+ *     summary: Generate qr code for the short url
+ *     tags:
+ *       - URL Shortening
+ *     parameters:
+ *       - in: body
+ *         name: shortUrl
+ *         required: true
+ *         type: string
+ *         description: The url to be found
+ *       - in: Bearer token
+ *         name: Authorization
+ *         required: true
+ *         type: string
+ *         description: Bearer token to authenticate user
+ *     responses:
+ *       200:
+ *         description: Generates qr code for the url
+ *       401:
+ *         description: Invalid Token
+ *       404:
+ *         description: Url not found
+ */
+exports.scanQr = {};

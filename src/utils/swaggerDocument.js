@@ -15,7 +15,9 @@ const swaggerDefinition = {
         description: "API for shortening long URLs",
       },
     ],
-    schemes: ["https"],
+    schemes: ["http"],
+    consumes: ["application/json"],
+    produces: ["application/json"],
   },
   apis: ["src/docs/swagger.js"],
 };
