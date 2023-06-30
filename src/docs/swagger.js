@@ -87,82 +87,38 @@ module.exports = { loginDoc };
 
 /**
  * @swagger
- * definitions:
- *   Location:
- *     properties:
- *       state:
- *           type: String,
- *       capital:
- *           type: String
- *       region:
- *           type: String
- *       slogan:
- *           type: String
- *       senatorial_districts:
- *           type: Array
- *       lgas:
- *           type: Array
- *       landmass:
- *           type: String
- *       population:
- *           type: String
- *       dialect:
- *           type: String
- *       map:
- *           type: String
- *       latitude:
- *           type: String
- *       longitude:
- *           type: String
- *       website:
- *           type: String
- *       geo_politcal_zone:
- *           type: String
- *       created_date:
- *           type: Date
- *       created_by:
- *           type: String
- *       past_governors:
- *           type: Array
- *       borders:
- *           type: Array
- *       known_for:
- *           type: Array
- */
-
-/**
- * @swagger
- * /location/region:
- *   get:
- *     summary: Get regions based on the provided region name
- *     security:
- *       - ApiKeyAuth: []
- *     tags:
- *       - Regions
+ * /url/shorten:
+ *   post:
+ *     summary: Create a short url
  *     parameters:
- *       - in: query
- *         name: region_name
+ *       - in: Bearer token
+ *         name: Authorization
+ *         required: true
+ *         type: string
+ *         description: Bearer token to authenticate user
+ *       - in: body
+ *         name: Long url
+ *         required: true
+ *         type: string
+ *         description: Long url to be shorten
+ *       - in: body
+ *         name: custom name
  *         required: false
  *         type: string
- *         description: Name of the region
- *       - in: query
- *         name: lga
- *         required: false
- *         type: string
- *         description: Local Government Area
+ *         description: Custom name to customize the short url
  *     responses:
  *       200:
- *         description: A list of regions
+ *         description: Short url created
  *       401:
  *         description: Missing or Invalid Authorization header
  *       404:
- *         description: Region not found
+ *         description: Long url is invalid
  */
-exports.regionsDoc = {};
+module.exports = {createUrl}
 
 /**
  * @swagger
- * /location/state:
+ * /user/history:
  *   get:
  *     summary: Get states based on the provided state name
  *     security:

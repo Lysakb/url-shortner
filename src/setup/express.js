@@ -4,8 +4,6 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const urlRouter = require("../routes/url.route");
-const cookieParser = require("cookie-parser");
-const path = require("path");
 
 const app = express();
 
