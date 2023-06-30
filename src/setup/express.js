@@ -1,6 +1,5 @@
 const express = require('express');
 require('express-async-errors');
-const cors = require('cors');
 const logger = require('morgan');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -28,10 +27,7 @@ app.use(limiter);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({
-  origin: 'https://localhost:3000',
-  credentials: true,
-}));
+
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', urlRouter);
